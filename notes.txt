@@ -1,0 +1,14 @@
+- use nodemon to start project so it automatically restarts your browser with all changes
+	- nodemon index
+
+- open a terminal window and start mongodb server with "brew services restart mongodb-community" then connect and use mongodb with "mongo"
+
+- npm install mongoose --save, npm install body-parser --save
+	- body parse is for parsing data from incoming requests like form data via urlencode
+
+- using embedded documents in users account:
+	that is, 
+	patron {
+		address: { object }
+	}
+

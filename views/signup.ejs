@@ -1,0 +1,79 @@
+<!-- signup.ejs -->
+
+<!-- it looks really nice with black wave!! -->
+
+<link href="/css/signup.css" rel="stylesheet" type="text/css">
+
+<body>
+<header>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" height="100%">
+        <linearGradient id="MyGradient">
+          <stop offset="10%" stop-color="#78ffd6" />
+          <stop offset="30%" stop-color="#a8ff78" />
+          <stop offset="60%" stop-color="#78ffd6" />
+          <stop offset="70%" stop-color="#a8ff78" />
+        </linearGradient>
+      </defs>
+  <path fill="url(#MyGradient)" fill-opacity="0.9" d="M0,96L48,133.3C96,171,192,245,288,240C384,235,480,149,576,144C672,139,768,213,864,218.7C960,224,1056,160,1152,133.3C1248,107,1344,117,1392,122.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+</svg>
+</header>
+
+
+<div class="form">
+<div class="h2cell">
+<h2>Sign up</h2>
+</div>
+<div style="height: 20px"></div>
+<div class="formcell">
+<form method="POST">
+	<div class="allinputs">
+	<label>Name</label>
+	<div class="nameinputs">
+		<input type="text" name="user[firstName]" style="text-align: left">
+		<input type="text" name="user[middleName]">
+		<input type="text" name="user[lastName]">
+	</div>
+	<label>Nickname</label>
+	<input type="text" name="user[nickName]">
+	<label>Username</label>
+	<input type="text" name="user[username]">
+	<label>Password</label>
+	<input type="password" name="user[password]">
+	</div>
+	<div style="height: 20px"></div>
+	<div class="submitbutton">
+		<input type = "submit">
+	</div>
+</form>
+</div>
+</div>
+<footer>
+</footer>
+</body>
+<!-- pallette:
+	background: #a8ff78;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #78ffd6, #a8ff78); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+-->
+
+<!-- svg patterns
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+  <path fill="#0099ff" fill-opacity="1" d="M0,160L60,160C120,160,240,160,360,186.7C480,213,600,267,720,288C840,309,960,299,1080,277.3C1200,256,1320,224,1380,208L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+</svg> 
+
+<div class="head2">
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" height="100%">
+  	<linearGradient id="TwoGradient">
+          <stop offset="10%" stop-color="#DCE35B" />
+          <stop offset="30%" stop-color="#11FFBD" />
+          <stop offset="50%" stop-color="#DCE35B" />
+          <stop offset="70%" stop-color="#11FFBD" />
+        </linearGradient>
+      </defs>
+  <path fill="url(#TwoGradient)" fill-opacity="0.3" d="M0,96L14.1,133.3C28.2,171,56,245,85,245.3C112.9,245,141,171,169,128C197.6,85,226,75,254,112C282.4,149,311,235,339,245.3C367.1,256,395,192,424,149.3C451.8,107,480,85,508,74.7C536.5,64,565,64,593,90.7C621.2,117,649,171,678,192C705.9,213,734,203,762,170.7C790.6,139,819,85,847,69.3C875.3,53,904,75,932,74.7C960,75,988,53,1016,58.7C1044.7,64,1073,96,1101,144C1129.4,192,1158,256,1186,234.7C1214.1,213,1242,107,1271,69.3C1298.8,32,1327,64,1355,90.7C1383.5,117,1412,139,1426,149.3L1440,160L1440,0L1425.9,0C1411.8,0,1384,0,1355,0C1327.1,0,1299,0,1271,0C1242.4,0,1214,0,1186,0C1157.6,0,1129,0,1101,0C1072.9,0,1045,0,1016,0C988.2,0,960,0,932,0C903.5,0,875,0,847,0C818.8,0,791,0,762,0C734.1,0,706,0,678,0C649.4,0,621,0,593,0C564.7,0,536,0,508,0C480,0,452,0,424,0C395.3,0,367,0,339,0C310.6,0,282,0,254,0C225.9,0,198,0,169,0C141.2,0,113,0,85,0C56.5,0,28,0,14,0L0,0Z"></path>
+
+</svg>
+</div>
+
+-->
+
