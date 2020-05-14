@@ -1,13 +1,26 @@
-
-<div>
-<p>hello <%=firstName%></p>
-
-<% entries.forEach((entry) => { %>
-    <div>
-    <div>
-       <%= entry.title %> 
-    </div>
-    </div>
-<% }) %>
-
+<%- include('./partials/header') %>
+<header>
+    <h2>Welcome Back <%=firstName%></h2>
+</header>
+<div class="container-fluid">
+<div class="row">
+    <% entries.forEach((entry) => { %>
+        <div class="col">
+        <div class="card" > <!--style="width: 18rem;"-->
+            <div class="card-header">
+                <h3>Day 12</h3>
+            </div>
+        <div class="card-body">
+            <div class="card-title"><%= entry.title %> </div>
+            <p class="card-text"><%=entry.content.slice(0,150)%>
+            <% if(entry.content.length > 150) {%>
+            ...</p>
+            <%}%>     
+        </div>
+        </div>
+        </div>
+    <% }) %>
 </div>
+</div>
+
+<%- include('./partials/footer') %>
