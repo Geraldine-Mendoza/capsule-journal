@@ -3,7 +3,7 @@
 var mongoose = require('mongoose')
 	crypto = require('crypto')
 	jwt = require('jsonwebtoken');
-
+const Entry = require('./entryModel');
 
 var profileSchema = new mongoose.Schema({
 	// account
@@ -20,25 +20,26 @@ var profileSchema = new mongoose.Schema({
 		middleName: String,
 		lastName: String,
 		nickName: String,
-	}
+	},
+	entries: [ Entry ],
 });
 
-// ** arrow function does not itself have this property **
+// ** arrow function this property points always to what defined it **
+// so `this` refers to profileSchema instance
 
-// set password to account
+// set password (string) to account
 profileSchema.methods.setPassword = function(password) {
 	this.salt = crypto.randomBytes(16).toString('hex');
-	console.log(`set salt to ${this.salt}`);
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+	this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
-// check valid password
+// check if hash for given password matches profileSchema hash
 profileSchema.methods.validatePassword = function(password) {
-	console.log(`salt is ${this.salt}`);
 	const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-  return this.hash === hash;
+  	return this.hash === hash;
 };
 
+// generateJWT returns a jwt token
 profileSchema.methods.generateJWT = function() {
 	const today = new Date();
 	const expirationDate = new Date(today);
@@ -46,16 +47,17 @@ profileSchema.methods.generateJWT = function() {
 
 	// should profile info be in the token ?
 	// or just username ?
+	// payload includes username, id and exp... (only need id)
+	// 		- payload stuff can be seen by anyone
 	return jwt.sign({
 		username: this.username,
 		_id: this._id,
 		exp: parseInt(expirationDate.getTime()/1000, 10)
-	}, 'secret');
+	}, 'secret'); // TODO: secret should not be publicly visible, put in env variable
 
 }
 
-// this is not working...
-// "generateJWT is not a function"
+// returns object holding info
 profileSchema.methods.toAuthJSON = function() {
 	return {
 		_id: this._id,
@@ -64,9 +66,4 @@ profileSchema.methods.toAuthJSON = function() {
 	}
 };
 
-
-
 var Profile = module.exports = mongoose.model('profile', profileSchema);
-/*module.exports.get = (callback, limit) => {
-	Profile.find(callback).limit(limit);
-}*/

@@ -32,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // for parsing multipart/form-data
 app.use(upload.array()); 
+app.use(apiRoutes)
 
 if(!isProduction) {
   app.use(errorHandler());
@@ -71,9 +72,8 @@ app.use((err, req, res) => {
   });
 });*/
 
-app.get('/', (req, res) => res.send('Hello World (now using nodemon)!'))
+//app.get('/', (req, res) => res.send('Hello World (now using nodemon)!'))
 // use api routes in app
-app.use('/api', apiRoutes)
 app.get('*', function(req, res) {  res.send('oops wrong url');});
 app.listen(port, () => console.log(`listening at localhost${port}`))
 

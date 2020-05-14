@@ -59,46 +59,84 @@ exports.new = (req, res, next) => {
 	profile.save((err) => {
 		if(err) return next(err);
 		return res.json({
-						message: "new user profile created",
-						token: profile.generateJWT()
-					});
+			message: "new user profile created",
+			token: profile.generateJWT()
+		});
 	});
 };
 
 exports.login = (req, res, next) => {
-	const { body: user} = req;
-	//const user = body.user;
-	console.log(user);
+	const { body: user } = req;
 
 	if(!user.username) {
 		return res.json({
-      errors: {
-        username: 'is required',
-      },
-    });
+			errors: { username: 'is required' }
+		});
 	};
 	if(!user.password) {
 		return res.json({
-      errors: {
-        password: 'is required',
-      },	
-    });
+      		errors: { password: 'is required' }	
+    	});
 	};
 
-	passport.authenticate('local', {session: false}, (err, passportUser, info) => {
-		if(err) return next(err);
+	Profile.findOne({username: user.username}, (err, TrueUser) => {
+		if(!TrueUser.validatePassword(user.password)) res.status(401).send({auth: false, token: null});
+
+		const token = TrueUser.generateJWT();
+		console.log({auth: true, token: token});
+		// req for later routes
+		req.headers['x-access-token'] = token; 
+		res.send({auth: true, token: token});
+		//next()
+	})
+	
+
+	// session set to false for easier testing **
+	// on success, authenticate will redirect to user's profile
+	/*passport.authenticate('local', {session: false}, (err, passportUser, info) => {
+		// TODO
+		// on error....
+		if(err) {
+			return res.status(500).json({error: "Unauthorized"})
+		}
+		// auth failed
+		if(!passportUser) {
+			console.log(`auth failed due to user ${passportUser}`); return res.redirect('/login'); }
 		if(passportUser) {
-			const user = passportUser;
+			/*const user = passportUser;
 			user.token = passportUser.generateJWT();
 			res.json({
 				message: "successfully logged in to account:",
-				user: user.toAuthJSON()
+				user: user.toAuthJSON() // print important info in res
 			});
-		}
+			res.redirect('/users/' + user.username);
 
-		return info;
-	})(req, res, next);
+			//jwt.verify()
+		}
+	})(req, res, next);*/
 };
 
+exports.getEntryInfo = (req, res, next) => {
+	Profile.findOne({_id: req.userId}, (err, user) => {
+		if(err) res.status(500).send("Could not access home page")
+		req.entries = user.entries;
+		req.firstName = user.profile.firstName;
+		next();
+	})
+}
 
+// just used for testing
+exports.deleteOne = (req, res) => {
+	Profile.deleteOne({_id: req.params.id}, (err) => {
+		if(err) res.send(`oops there was error deleting account with id ${req.params.id}`);
+		res.send(`successfully deleted account with id ${req.params.id}`);
+	})
+}
+
+exports.deleteAll = (req, res) => {
+	Profile.remove({}, (err) => {
+		if(err) res.send(`oops there was error deleting all accounts`);
+		res.send(`successfully deleted all accounts`);
+	})
+}
 
