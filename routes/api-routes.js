@@ -1,8 +1,12 @@
+const express = require('express'),
+	app = express(),
+	flash = require('express-flash'),
+	passport = require('passport');
+
 // initializes express router
-let router = require('express').Router();
-const passport = require('passport')
+const router = require('express').Router()
 	authenticate = require('./auth');
-require('../config/passport');
+
 // fixme: remove this, should all be in profileController
 Profile = require('../models/profileModel');
 const Entry = require('../models/entryModel');
@@ -16,8 +20,8 @@ router.get('/', (req, res) => {
 });
 
 //import controllers
-var entryController = require('../controllers/entryController');
-var profileController = require('../controllers/profileController');
+const entryController = require('../controllers/entryController');
+const profileController = require('../controllers/profileController');
 
 // used only for testing
 router.route('/deleteOneAccount/:id')
@@ -32,8 +36,15 @@ router.route('/login')
 	.get((req, res) => {
 		res.render("log-in.ejs");
 	})
-	.post(profileController.login);
-		//(res, req) => {res.redirect('/users/me')}); // believe this should be handled by client
+	// check if password and username match to database; 
+	// if they do, redirect to users/me
+	.post(
+	passport.authenticate('local', (
+		{
+			successRedirect: '/users/me',
+			failureRedirect: '/login',
+			failureFlash: true 
+		})));
 
 router.route('/signup')
 	.get((req, res) => {
@@ -43,11 +54,11 @@ router.route('/signup')
 
 router.route('/users/me')
 	.get(authenticate, 
-		profileController.getEntryInfo, 
-		(req, res) => { res.render("user-home.ejs", { firstName: req.firstName, entries: req.entries }) });
+		//profileController.getEntryInfo, 
+		(req, res) => { res.render("user-home.ejs", { firstName: req.user.username }) });
 
-// FIXME: THESE ROUTES ARE TEMP ONLY FOR TESTING
-// Entry routes
+// TODO: THESE ROUTES ARE TEMP ONLY FOR TESTING
+// Entry routes STATIC
 router.route('/entries/:user') // :user removed later since using auth, and info passed through headers
 	.get((req, res) => { // temp get first user in collection
 		res.render('user-home.ejs', 
@@ -65,10 +76,6 @@ router.route('/entries/:user') // :user removed later since using auth, and info
 				emotion: 'sad' 
 			}]
 		});
-		/*Profile.findOne({}, (err, user) => {
-			console.log(user.entries);
-			res.render('user-home.ejs', { firstName: user.profile.firstName, entries: user.entries })
-		});*/
 	});
 
 // should know user from session here

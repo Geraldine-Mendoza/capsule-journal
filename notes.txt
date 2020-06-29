@@ -12,3 +12,57 @@
 		address: { object }
 	}
 
+- username: communism4win
+	password: ????
+
+- username: marbleslost
+	password: marbleswon
+
+- cookies, sessions for data: 
+	https://medium.com/@ravaeimohamad/send-data-between-different-routes-in-nodejs-using-sessions-774a7a95189e
+
+<!--<<div class="row">
+    <% entries.forEach((entry) => { %>
+        <div class="col">
+        <div class="card" id='<%= entry._id %>'>
+            <div class="card-header">
+                <h3>Day 12</h3>
+            </div>
+        <div class="card-body">
+            <div class="card-title"><%= entry.title %> </div>
+            <p class="card-text"><%=entry.content.slice(0,150)%>
+            <% if(entry.content.length > 150) {%>
+            ...</p>
+            <%}%>     
+        </div>
+        </div>
+        </div>
+    <% }) %>
+</div>-->
+
+
+<!--<% if (messages.error) { %>
+    <% messages.error %>
+<% } %>-->
+
+	// TODO
+		// on error....
+		if(err) {
+			return res.status(500).json({error: "Unauthorized"})
+		}
+		// auth failed
+		if(!passportUser) {
+			console.log(`auth failed due to user ${passportUser}`); return res.redirect('/login'); }
+		if(passportUser) {
+			const user = passportUser;
+			user.token = passportUser.generateJWT();
+			res.json({
+				message: "successfully logged in to account:",
+				user: user.toAuthJSON() // print important info in res
+			});
+			res.redirect('/users/' + user.username);
+
+			//jwt.verify()
+		}
+	})(req, res, next); 
+

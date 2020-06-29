@@ -1,18 +1,19 @@
 /* Google Fonts */
 @import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
 
-body {
-	margin: 0;
-}
 header {
-	padding: 0px;
-	margin: 0px;
-	overflow: hidden;
-	position: relative;
-  height: 700px;
-  z-index: -1;
-  margin: auto;
+	height: 25vh;
+	background: linear-gradient(to right, #2e1823, #3b3744); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    text-align: center;
+    vertical-align: middle;
+}
 
+header h2 {
+    line-height: 25vh;
+    color: white;
+    text-shadow: 3px 1px 8px rgba(255, 255, 255, 0.651);
+	font-variant: small-caps;
+	font-size: 3em;
 }
 
 .head2 {
@@ -39,13 +40,13 @@ footer {
 	display: table;
 	width: 800px;
 	
+	margin: auto;
+	margin-top: 28vh;
 	position: absolute;
 	top:0;
 	bottom: 0;
 	left: 0;
 	right: 0;
-  	
-	margin: auto;
 }
 
 .h2cell {
@@ -53,6 +54,7 @@ footer {
 	position: relative;
 	vertical-align: middle;
 	text-align: center;
+	background-color: #222222;
 }
 
 .formcell {
@@ -91,29 +93,29 @@ input {
 	line-height: 30px;
 	padding: 22px 12px;
 	margin-bottom: 15px; 
+	background-color: rgb(233, 233, 233);
 }
 
 input[type=text],[type=password] {
 	font-size: 18px;
-	border-style:solid;
-	border-width: 1px;
-	border-color: #e0dedc;
+	border: #c4c4c4;
+	border-style: solid;
+	border-width: 0.5px;
 	border-radius: 4px;
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, .15);
+	box-shadow: 5px 5px 10px rgba(44, 4, 49, 0.15);
 }
 
 input[type=text]:focus,[type=password]:focus {
 	box-shadow: 10px 10px 20px rgba(0, 0, 0, .15);
 	outline: none;
-	border-right-color: green;
+	border-right-color: #2e1823;
 	border-right-width: 3px;
 }
 
 input[type=submit] {
 	display: inline-block;
-	background: #a8ff78;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #78ffd6, #a8ff78); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: #3b8d99;  /* fallback for old browsers */
+	background: linear-gradient(to right, #2e1823, #3b3744); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 	line-height: 0px;
   	border: none;
   	color: white;
@@ -139,7 +141,7 @@ input[type=submit]:hover {
 
 
 label {
-	color: #827f7d;
+	color: rgb(53, 53, 53);
 }
 
 .nameinputs input {

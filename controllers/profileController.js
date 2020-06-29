@@ -1,8 +1,28 @@
 // profileController
+if(process.env.NODE_ENV !== 'production') { require('dotenv').config() } // set up env
 
-const mongoose = require('mongoose');
-const passport = require('passport');
+const express = require('express'),
+	app = express(),
+	mongoose = require('mongoose'),
+	flash = require('express-flash'),
+	passport = require('passport');
+
 Profile = require('../models/profileModel');
+
+app.use(express.urlencoded({ extended: false }))
+//auth
+app.use(flash())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false, // no resaving session vars if nothing changed
+  saveUninitialized: false // no empty value on init
+}))
+app.use(passport.initialize())
+app.use(passport.session()) // req.user always set to user that's authenticated at that moment
+
+// passport initilization
+const initializePassport = require('../config/passport');
+initializePassport(passport);
 
 // list all profiles
 exports.index = (req, res) => {
@@ -60,64 +80,51 @@ exports.new = (req, res, next) => {
 		if(err) return next(err);
 		return res.json({
 			message: "new user profile created",
-			token: profile.generateJWT()
 		});
 	});
 };
 
 exports.login = (req, res, next) => {
-	const { body: user } = req;
-
-	if(!user.username) {
+	const username = req.body.username;
+	const password = req.body.password;
+	console.log(username);
+	if(!username) {
 		return res.json({
 			errors: { username: 'is required' }
 		});
 	};
-	if(!user.password) {
+	if(!password) {
 		return res.json({
       		errors: { password: 'is required' }	
     	});
 	};
-
+	/*
 	Profile.findOne({username: user.username}, (err, TrueUser) => {
 		if(!TrueUser.validatePassword(user.password)) res.status(401).send({auth: false, token: null});
 
 		const token = TrueUser.generateJWT();
-		console.log({auth: true, token: token});
 		// req for later routes
-		req.headers['x-access-token'] = token; 
-		res.send({auth: true, token: token});
-		//next()
-	})
+		//req.headers['auth-access-token']= token;
+		res.locals.authtoken = token;
+		console.log(res.locals.authtoken);
+		// set token in client side using ------- API
+		console.log({auth: true, token: token});
+		next();
+	})*/
 	
-
-	// session set to false for easier testing **
+	console.log('about to auth passport, login controller');
+	console.log(req.body);
 	// on success, authenticate will redirect to user's profile
-	/*passport.authenticate('local', {session: false}, (err, passportUser, info) => {
-		// TODO
-		// on error....
-		if(err) {
-			return res.status(500).json({error: "Unauthorized"})
-		}
-		// auth failed
-		if(!passportUser) {
-			console.log(`auth failed due to user ${passportUser}`); return res.redirect('/login'); }
-		if(passportUser) {
-			/*const user = passportUser;
-			user.token = passportUser.generateJWT();
-			res.json({
-				message: "successfully logged in to account:",
-				user: user.toAuthJSON() // print important info in res
-			});
-			res.redirect('/users/' + user.username);
-
-			//jwt.verify()
-		}
-	})(req, res, next);*/
+	passport.authenticate('local', (
+	{
+		successRedirect: '/users/me',
+		failureRedirect: '/login',
+		failureFlash: true 
+	}));
 };
 
 exports.getEntryInfo = (req, res, next) => {
-	Profile.findOne({_id: req.userId}, (err, user) => {
+	Profile.findOne({firstName: req.user.firstName}, (err, user) => {
 		if(err) res.status(500).send("Could not access home page")
 		req.entries = user.entries;
 		req.firstName = user.profile.firstName;

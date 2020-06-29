@@ -1,1 +1,27 @@
 <!-- log-in.ejs -->
+<%- include('./partials/header') %>
+
+<link href="/css/signup.css" rel="stylesheet" type="text/css">
+<script src="/scripts/client-token.js" defer></script>
+<body style="background-color: rgb(230, 230, 230);">
+<header>
+    <h2>LOG IN</h2>
+</header>
+<div class="form">
+    <div style="height: 20px"></div>
+    <div class="formcell">
+    <form method="POST">
+        <div class="allinputs">
+        <label>Username</label>
+        <input type="text" name="username" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        </div>
+        <div style="height: 20px"></div>
+        <div class="submitbutton">
+            <input id="submit-btn" type = "submit">
+        </div>
+    </form>
+    </div>
+</div>
+</body>

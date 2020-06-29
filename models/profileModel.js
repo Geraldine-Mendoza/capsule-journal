@@ -39,6 +39,7 @@ profileSchema.methods.validatePassword = function(password) {
   	return this.hash === hash;
 };
 
+/*
 // generateJWT returns a jwt token
 profileSchema.methods.generateJWT = function() {
 	const today = new Date();
@@ -64,6 +65,6 @@ profileSchema.methods.toAuthJSON = function() {
 		username: this.username,
 		token: this.generateJWT(),
 	}
-};
+};*/
 
 var Profile = module.exports = mongoose.model('profile', profileSchema);
