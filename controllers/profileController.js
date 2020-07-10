@@ -98,19 +98,6 @@ exports.login = (req, res, next) => {
       		errors: { password: 'is required' }	
     	});
 	};
-	/*
-	Profile.findOne({username: user.username}, (err, TrueUser) => {
-		if(!TrueUser.validatePassword(user.password)) res.status(401).send({auth: false, token: null});
-
-		const token = TrueUser.generateJWT();
-		// req for later routes
-		//req.headers['auth-access-token']= token;
-		res.locals.authtoken = token;
-		console.log(res.locals.authtoken);
-		// set token in client side using ------- API
-		console.log({auth: true, token: token});
-		next();
-	})*/
 	
 	console.log('about to auth passport, login controller');
 	console.log(req.body);
