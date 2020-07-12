@@ -1,14 +1,16 @@
 header {
     height: 25vh;
-    background-color: #222222;
+    background-color: #E8EBF4;
     text-align: center;
     vertical-align: middle;
 }
 
 header h2 {
+    font-size: 3rem;
+    font-weight: 200;
     line-height: 25vh;
-    color: white;
-    text-shadow: 3px 1px 8px rgba(255, 255, 255, 0.651);
+    color: #272e44;
+    text-shadow: 3px 3px 8px rgba(145, 163, 167, 0.651);
     font-variant: small-caps;
 }
 
@@ -68,4 +70,13 @@ header h2 {
 .col {
     padding: 0px;
     width: 20rem;
+}
+
+#new {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    background-color: blueviolet;
+    height: 100px;
+    width: 100px;
 }

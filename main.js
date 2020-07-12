@@ -16,8 +16,8 @@ const express = require('express'),
 	flash = require('express-flash')
 	session = require('express-session');
 
-//Configure mongoose's promise to global promise
-mongoose.promise = global.Promise;
+// //Configure mongoose's promise to global promise
+// mongoose.promise = global.Promise;
 
 // set up folders
 app.set('view engine', 'ejs');
@@ -48,43 +48,23 @@ app.use(passport.session()) // req.user always set to user that's authenticated 
 const initializePassport = require('./config/passport');
 initializePassport(passport);
 
-// configure mongoose
-mongoose.connect('mongodb://localhost/qjournal', { useNewUrlParser: true});
-var db = mongoose.connection;
-mongoose.set('debug', true);
+// db connections
+const userConn = `userDB`;
+//exports.makeUserConn = mongoose.connect(`mongodb://localhost/${userConn}`);
 
-if(!db) console.log("Error connecting db")
-else console.log("Db cocnnected successfully")
+/*
+const entryConn = `entriesDB`;
+exports.makeConn2 = mongoose.createConnection(`mongodb://localhost:27017/${entryConn}`, {useNewUrlParser: true }, function(err){
+  if (!err){
+    console.log(`Database Server connection created at: ${entryConn}`);
+  } else {
+    console.log(`Error starting server ${err}`);
+  }
+});*/
 
 // routes
 const apiRoutes = require("./routes/api-routes");
 app.use(apiRoutes);
-
-/*
-//Error handlers & middlewares
-if(!isProduction) {
-  app.use((err, req, res) => {
-    res.status(err.status || 500);
-
-    res.json({
-      errors: {
-        message: err.message,
-        error: err,
-      },
-    });
-  });
-}
-
-app.use((err, req, res) => {
-  res.status(err.status || 500);
-
-  res.json({
-    errors: {
-      message: err.message,
-      error: {},
-    },
-  });
-});*/
 
 //app.get('/', (req, res) => res.send('Hello World (now using nodemon)!'))
 // use api routes in app

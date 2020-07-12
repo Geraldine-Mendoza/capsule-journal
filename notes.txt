@@ -66,3 +66,16 @@
 		}
 	})(req, res, next); 
 
+- some color vibes
+#e8f1f4
+#e8ebf4
+#ebe8f4
+#f1e8f4
+#f4e8f1
+#f4e8eb
+
+
+- does opening diff connections for each collection (/model??) make any difference??
+	- the reason this wasn't working was 
+	1. req.user_id is not defined
+	2. a brackets issue with findOne(), which i changed to findById

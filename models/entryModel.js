@@ -1,7 +1,8 @@
 // entryModel.js
-
+var mongoose = require('mongoose');
+var conn2 = require("../main"); 
 // schema setup
-var EntryObject = {
+var EntrySchema = new mongoose.Schema({
 	user_id: {
 		type: String,
 		required: true
@@ -14,10 +15,11 @@ var EntryObject = {
 	title: String,
 	content: String,
 	emotion: String,
-};
+});
 
-//export entry model
-module.exports = EntryObject;
+userConn = 'entryDB';
+makeUserConn = mongoose.createConnection(`mongodb://localhost/${userConn}`, { useNewUrlParser: true });
+var Entry = module.exports = makeUserConn.model('entry', EntrySchema);
 
 
 

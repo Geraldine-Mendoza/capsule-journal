@@ -1,12 +1,24 @@
 // entryController
 
-const mongoose = require('mongoose');
 const Entry = require('../models/entryModel');
-Profile = require('../models/profileModel');
+
+exports.checkUserIdForEntry = (req, res, next) => {
+	console.log('checking that user with user_id ' + req.user._id + 'has access to entry with _id' + req.params.entry_id);
+	Entry.findById(req.params.entry_id, (err, entry) => {
+		console.log('foudn one!');
+		if(err) res.status(404).send("That entry does not exist.").redirect('/users/me') // ok ? **
+		if(entry.user_id == req.user._id) {
+			console.log('that user has access to entry ' + entry._id);
+			next();
+		} else {
+			res.redirect('/users/me');
+		}
+	});
+}
 
 // handle what is returned from index
 exports.index = (req, res) => {
-	/*Entry.find({}, (err, entries) => {
+	Entry.find({}, (err, entries) => {
 		if(err) {
 			res.json({
 				status:"error",
@@ -18,57 +30,48 @@ exports.index = (req, res) => {
 			message: "Entries retrieved successfully",
 			data: entries
 		});
-	});*/
+	});
 };
 
 // create new entry
-exports.newEntry = (req, res) => {
-	/*var entry = new Entry();
-	entry.date = req.body.date;
-	entry.title = req.body.title;
-	entry.content = req.body.content;
-	entry.emotion = req.body.emotion;
-	console.log(`content is ${entry.content}\n`);
-	//save entry & check if errors
-	entry.save((err) => {
-		if(err) res.json(err);
-		res.json({
-			message: "new entry created",
-			data: entry
-		});
+exports.new = (req, res) => {
+
+	/*
+	var newEntry = new Entry({
+		user_id: req.user_id,
+		date: Date.now()
+	});
+	newEntry.save((err) => { 
+		if (err) res.json(err)
+		res.send('saved an entry!')
 	});*/
 
-	const entry = new Entry();
-	entry.date = req.body.date;
-	entry.title = req.body.title;
-	entry.content = req.body.content;
-	entry.emotion = req.body.emotion;
-
-	Profile.updateOne({_id: req.userId }, {entries: req.entries.append(entry)});
-	res.status(200).send({message: "added new entry"});
+	Entry.create({
+		user_id: req.user._id, //TODO: SWITCH BACK TO USING THIS! ... can't do req.user_id!!
+		date: Date.now()
+	}, (err, entry) => {
+		console.log(entry);
+		if(err) res.json(err);
+		res.redirect(`/users/me/${entry._id}`)
+	})
 };
 
 // view entry info
 exports.view = (req, res) => {
-	/*Entry.findById(req.params.entry_id, (err, entry) => {
+	console.log('looking for entry with _id of ' + req.params.entry_id);
+	Entry.findById(req.params.entry_id, (err, entry) => {
 		if(err) res.send(err);
-		console.log(`content is ${entry.content}\n`);
-		res.json({
-			message: 'Loading entry...',
-			data: entry
-		});
-	});*/
+		res.render('entry-edit.ejs', {entry: entry});
+	});
 };
 
 // update entry info
-exports.update = (req, res) => {
-	/*Entry.findById(req.params.entry_id, (err, entry) => {
-		if(err) res.send(err);
-		res.json({
-			message: 'Entry updated!',
-			data: entry
-		});
-	});*/
+exports.update = (req, res, next) => {
+	Entry.updateOne({_id: req.params.entry_id}, 
+		{
+			title: req.body.title,
+			content: req.body.emotion // add emotion eventually here
+		}, next())
 };
 
 // delete entry

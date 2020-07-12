@@ -1,28 +1,10 @@
 // profileController
 if(process.env.NODE_ENV !== 'production') { require('dotenv').config() } // set up env
 
-const express = require('express'),
-	app = express(),
-	mongoose = require('mongoose'),
-	flash = require('express-flash'),
-	passport = require('passport');
+const mongoose = require('mongoose'),
+	flash = require('express-flash');
 
 Profile = require('../models/profileModel');
-
-app.use(express.urlencoded({ extended: false }))
-//auth
-app.use(flash())
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false, // no resaving session vars if nothing changed
-  saveUninitialized: false // no empty value on init
-}))
-app.use(passport.initialize())
-app.use(passport.session()) // req.user always set to user that's authenticated at that moment
-
-// passport initilization
-const initializePassport = require('../config/passport');
-initializePassport(passport);
 
 // list all profiles
 exports.index = (req, res) => {
@@ -45,13 +27,12 @@ exports.index = (req, res) => {
 exports.new = (req, res, next) => {
 	const { body: body} = req;
 	const user = body.user;
-	console.log(user);
 
 	// errors if not there -- 
 	// client should deal w this
-	if(!user.username) {
+	if(!user.email) {
 		return res.json({
-			errors: { username: 'is required', }
+			errors: { email: 'is required', }
     	});
 	};
 	if(!user.password) {
@@ -67,9 +48,9 @@ exports.new = (req, res, next) => {
 
 	// create new profile object
 	var profile = new Profile();
-	profile.username = user.username;
-	profile.profile = {
-		firstName: user.firstName,
+	profile.email = user.email;
+	profile.name = {
+		firstName : user.firstName,
 		middleName: user.middleName,
 		lastName: user.lastName,
 		nickName: user.nickName,
@@ -84,13 +65,14 @@ exports.new = (req, res, next) => {
 	});
 };
 
+/*
 exports.login = (req, res, next) => {
-	const username = req.body.username;
+	const email = req.body.email;
 	const password = req.body.password;
-	console.log(username);
-	if(!username) {
+	console.log(email);
+	if(!email) {
 		return res.json({
-			errors: { username: 'is required' }
+			errors: { email: 'is required' }
 		});
 	};
 	if(!password) {
@@ -102,13 +84,14 @@ exports.login = (req, res, next) => {
 	console.log('about to auth passport, login controller');
 	console.log(req.body);
 	// on success, authenticate will redirect to user's profile
-	passport.authenticate('local', (
+	passport.authenticate('local', 
 	{
 		successRedirect: '/users/me',
 		failureRedirect: '/login',
 		failureFlash: true 
-	}));
-};
+	});
+	
+};*/
 
 exports.getEntryInfo = (req, res, next) => {
 	Profile.findOne({firstName: req.user.firstName}, (err, user) => {

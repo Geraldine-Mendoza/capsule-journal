@@ -1,9 +1,13 @@
 <%- include('./partials/header') %>
-
-<body style="background-color: lightgrey;">
+<body style="background-color: white;">
 <header>
     <h2>Welcome Back <%=firstName%></h2>
 </header>
+<div id="new"></div>
+<form method="post" action="/users/me/new">
+    <button type="submit" name="new_button" id="new_button">hey</button>
+</form>
+</div>
 <div class="container-fluid">
 
 </div>

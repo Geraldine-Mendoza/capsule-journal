@@ -6,27 +6,22 @@ const passport = require('passport');
 
 Profiles = require('../models/profileModel');
 
-getUserById = (id) => {
-  Profiles.findOne({ _id: id })
-  .then(user => {return user});
-}
-
 function initialize(passport) {
   console.log('initalized')
-  const authenticateUser = (username, password, done) => {
-    console.log(`username we got was ${username}`);
+  const authenticateUser = (email, password, done) => {
+    console.log(`username we got was ${email}`);
     console.log(`password we got was ${password}`);
-    Profiles.findOne({ username: username }, (err, user) => {
+    Profiles.findOne({ email: email }, (err, user) => {
         console.log(`the user is ${user}`);
         if(err) { return done(err); }
         if(!user || !user.validatePassword(password)) {
           return done(null, false, { message: "Username or password is invalid"});
         }
-        else { return done(null, user); }
+        else { return done(null, user); } // why user and not user._id here ?? **
       })
   }
 
-  passport.use(new LocalStrategy({usernameField: 'username', passwordField:'password'}, authenticateUser));
+  passport.use(new LocalStrategy({usernameField: 'email', passwordField:'password'}, authenticateUser));
   passport.serializeUser((user, done) => done(null, user._id));
   passport.deserializeUser((id, done) => { 
     Profiles.findById(id, (err, user) => { done(err, user); })

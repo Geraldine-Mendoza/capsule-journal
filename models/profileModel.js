@@ -1,8 +1,8 @@
 // profileModel.js
 
-var mongoose = require('mongoose')
-	crypto = require('crypto')
-	jwt = require('jsonwebtoken');
+var mongoose = require('mongoose');
+//const conn1 = require('../main');
+const crypto = require('crypto');
 
 var profileSchema = new mongoose.Schema({
 	// account
@@ -14,17 +14,14 @@ var profileSchema = new mongoose.Schema({
 	//auth
 	hash: String,
 	salt: String,
-	profile: {
-		// name
-		name: {
-			firstName: {
-				type: String,
-				required: true,
-			},
-			middleName: String,
-			lastName: String,
-			nickName: String
-		}
+	name: {
+		firstName: {
+			type: String,
+			required: true,
+		},
+		middleName: String,
+		lastName: String,
+		nickName: String
 	},
 });
 
@@ -43,4 +40,7 @@ profileSchema.methods.validatePassword = function(password) {
   	return this.hash === hash;
 };
 
-var Profile = module.exports = mongoose.model('profile', profileSchema);
+userConn = 'userDB';
+makeUserConn = mongoose.createConnection(`mongodb://localhost/${userConn}`, { useNewUrlParser: true });
+// ** this isnt working for some reason :( **
+var Profile = module.exports = makeUserConn.model('profile', profileSchema);
