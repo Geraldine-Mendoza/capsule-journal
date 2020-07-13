@@ -3,9 +3,27 @@
 <header>
     <h2>Welcome Back <%=firstName%></h2>
 </header>
-<div id="new"></div>
+
+<div class="card-columns">
+    <% entries.forEach((entry) => { %>
+        <div class="card card-default" id='<%= entry._id %>'>
+            <div class="card-header">
+                <h3>Day 12</h3>
+            </div>
+        <div class="card-body">
+            <div class="card-title"><%= entry.title %> </div>
+            <p class="card-text"><%=entry.content.slice(0,150)%>
+            <% if(entry.content.length > 150) {%>
+            ...</p>
+            <%}%>     
+        </div>
+        </div>
+    <% }) %>
+</div>
+
+<div id="new">
 <form method="post" action="/users/me/new">
-    <button type="submit" name="new_button" id="new_button">hey</button>
+    <button type="submit" name="new_button" id="new_button"></button>
 </form>
 </div>
 <div class="container-fluid">

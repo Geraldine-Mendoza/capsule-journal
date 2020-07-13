@@ -17,6 +17,7 @@ var EntrySchema = new mongoose.Schema({
 	emotion: String,
 });
 
+// why does it only work when i do this ?? **
 userConn = 'entryDB';
 makeUserConn = mongoose.createConnection(`mongodb://localhost/${userConn}`, { useNewUrlParser: true });
 var Entry = module.exports = makeUserConn.model('entry', EntrySchema);

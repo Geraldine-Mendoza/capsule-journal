@@ -1,4 +1,6 @@
 // entryController
+// - is it bad practice to have render here? (makes less general)
+
 
 const Entry = require('../models/entryModel');
 
@@ -6,8 +8,8 @@ exports.checkUserIdForEntry = (req, res, next) => {
 	console.log('checking that user with user_id ' + req.user._id + 'has access to entry with _id' + req.params.entry_id);
 	Entry.findById(req.params.entry_id, (err, entry) => {
 		console.log('foudn one!');
-		if(err) res.status(404).send("That entry does not exist.").redirect('/users/me') // ok ? **
-		if(entry.user_id == req.user._id) {
+		if(err) res.redirect('/users/me') // ok ? **
+		else if(entry.user_id == req.user._id) {
 			console.log('that user has access to entry ' + entry._id);
 			next();
 		} else {
@@ -26,29 +28,30 @@ exports.index = (req, res) => {
 			});
 		}
 		res.json({
-			status: "success",
-			message: "Entries retrieved successfully",
+			message: "LIST OF ALL ENTRIES",
 			data: entries
-		});
+		})
 	});
 };
 
+exports.userEntries = (req, res) => {
+	Entry.find({user_id: req.user._id}, 
+		(err, entries) => {
+			if(err) res.json({
+				status:"error",
+				message: err
+			});
+			res.render("user-home.ejs", {firstName: req.user.name.firstName, entries: entries});
+	})
+}
+
 // create new entry
 exports.new = (req, res) => {
-
-	/*
-	var newEntry = new Entry({
-		user_id: req.user_id,
-		date: Date.now()
-	});
-	newEntry.save((err) => { 
-		if (err) res.json(err)
-		res.send('saved an entry!')
-	});*/
-
 	Entry.create({
 		user_id: req.user._id, //TODO: SWITCH BACK TO USING THIS! ... can't do req.user_id!!
-		date: Date.now()
+		date: Date.now(),
+		title: "",
+		content: "",
 	}, (err, entry) => {
 		console.log(entry);
 		if(err) res.json(err);

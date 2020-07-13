@@ -27,7 +27,8 @@ router.route('/seeAllAccounts')
 	.get(profileController.index);
 
 router.route('/login')
-	.get((req, res) => {
+	.get(auth.checkNotAuthenticated,
+		(req, res) => {
 		res.render("log-in.ejs");
 	})
 	.post(passport.authenticate('local', 
@@ -43,10 +44,10 @@ router.route('/signup')
 	})
 	.post(profileController.new);
 
+// user-home
 router.route('/users/me')
-	.get(auth.checkAuthenticated, 
-		//profileController.getEntryInfo, 
-		(req, res) => { res.render("user-home.ejs", { firstName: req.user.name.firstName}) }); // you can also do user.name for some reason ?? **
+	.get(auth.checkAuthenticated,
+		entryController.userEntries); // you can also do user.name for some reason ?? **
 
 
 // ENTRY ROUTES

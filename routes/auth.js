@@ -7,6 +7,6 @@ exports.checkAuthenticated = (req, res, next) => {
 }
 
 exports.checkNotAuthenticated = (req, res, next) => {
-	if(req.isAuthenticated) return res.redirect('/users/me');
+	if(req.isAuthenticated()) return res.redirect('/users/me');
 	next() // otherwise continue
 }
