@@ -55,17 +55,15 @@ router.route('/users/me/new')
 	.post(auth.checkAuthenticated,
 		entryController.new) // create new entry and redirect to it
 
-router.route('/users/me/:entry_id/save')
-.patch(auth.checkAuthenticated, 
-	entryController.checkUserIdForEntry,
-	entryController.update, 
-	(req, res) => { res.redirect('/users/me')}) // update part of the source, but not the entirety
-
 router.route('/users/me/:entry_id')
 	.get(auth.checkAuthenticated, // make sure authenticated user is accessing
 		entryController.checkUserIdForEntry, // make sure authenticated user can access this entry
 		entryController.view) // ** maybe should pass entry through middleware... **
 	//.post(); // add entry if it doesn't already exist... this doesn't match w current set up
+	.post(auth.checkAuthenticated, 
+		entryController.checkUserIdForEntry,
+		entryController.update, 
+		(req, res) => { res.redirect('/users/me')}); // update part of the source, but not the entirety
 
 router.route('/entries/')
 	.get(entryController.index);

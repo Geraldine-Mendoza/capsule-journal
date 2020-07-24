@@ -1,4 +1,5 @@
 // entryModel.js
+const emotions = {"SAD":1, "HAPPY":2, "CONFUSED":3, "OKAY":4}; // the 4 emotions
 var mongoose = require('mongoose');
 var conn2 = require("../main"); 
 // schema setup

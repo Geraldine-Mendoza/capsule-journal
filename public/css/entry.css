@@ -51,7 +51,7 @@ textarea:focus {
     margin: 0 auto;
 }
 
-#discard, #save {
+#close_button, #save {
     position: fixed;
     top:10;
     width: 75px;
@@ -59,7 +59,7 @@ textarea:focus {
     transition: all 100ms ease-out;
 }
 
-#discard {
+#close_button {
     left: 20;
     background-image: url("https://img.icons8.com/plasticine/75/000000/close-window.png");
 }
@@ -69,7 +69,7 @@ textarea:focus {
     background-image: url("https://img.icons8.com/plasticine/75/000000/save.png");
 }
 
-#discard:hover {
+#close_button:hover {
     opacity: 0.8;
     top:5;
     left: 15;

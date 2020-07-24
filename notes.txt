@@ -81,3 +81,6 @@
 	- the reason this wasn't working was 
 	1. req.user_id is not defined
 	2. a brackets issue with findOne(), which i changed to findById
+
+
+- name on button will add a ~query to the url, so ?button_name=... will be in url... can this be helpful?

@@ -2,17 +2,18 @@
 
 <link href="/css/entry.css" rel="stylesheet" type="text/css">
 
-<div id="discard"></div>
-<div id="save"></div>
+<form method="post">
+<button type="submit" id="close_button"></button>
 
 <div id="entryDiv">
     <div class="textDiv">
-    <textarea id="title" name="Title" rows="1" cols="50"></textarea>
+    <textarea type="text" id="title" name="entryTitle" rows="1" cols="50"><%=entry.title%></textarea>
     </div>
     <div class="textDiv">
-    <textarea id="content" name="Content" rows="10" cols="50"></textarea>
+    <textarea type="text" id="content" name="entryContent" rows="10" cols="50"><%=entry.content%></textarea>
     </div>
 </div>
 
+</form>
 
 

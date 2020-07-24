@@ -5,7 +5,7 @@
 const Entry = require('../models/entryModel');
 
 exports.checkUserIdForEntry = (req, res, next) => {
-	console.log('checking that user with user_id ' + req.user._id + 'has access to entry with _id' + req.params.entry_id);
+	console.log('checking that user with user_id ' + req.user._id + 'has access to entry with _id ' + req.params.entry_id);
 	Entry.findById(req.params.entry_id, (err, entry) => {
 		console.log('foudn one!');
 		if(err) res.redirect('/users/me') // ok ? **
@@ -64,30 +64,47 @@ exports.view = (req, res) => {
 	console.log('looking for entry with _id of ' + req.params.entry_id);
 	Entry.findById(req.params.entry_id, (err, entry) => {
 		if(err) res.send(err);
-		res.render('entry-edit.ejs', {entry: entry});
+		res.render('entry-edit.ejs', {entry: entry, entry_id: req.params.entry_id});
 	});
 };
 
-// update entry info
+// update entry info (delete if all empty)
 exports.update = (req, res, next) => {
-	Entry.updateOne({_id: req.params.entry_id}, 
-		{
-			title: req.body.title,
-			content: req.body.emotion // add emotion eventually here
-		}, next())
+	if(req.body.entryTitle == '' && req.body.entryContent == '') {
+		Entry.deleteOne({_id: req.params.entry_id}, 
+			(err, entry) => {
+			if(err) res.send(err);
+			console.log({
+				status: "success",
+				message: 'entry deleted'
+			});
+			next();
+		});
+	}
+	else {
+		console.log('updating entry with entry id of ' + req.params.entry_id)
+		Entry.updateOne({_id: req.params.entry_id}, 
+		{$set:
+			{title: req.body.entryTitle,
+			content: req.body.entryContent} // add emotion eventually here
+		})
+		.then(next())
+		.catch(err => res.send(err));
+	}
 };
 
 // delete entry
 exports.delete = (req, res) => {
-	/*Entry.deleteOne({
+	Entry.deleteOne({
 		_id: req.params.entry_id
 	}, (err, entry) => {
 		if(err) res.send(err);
-		res.json({
+		console.log({
 			status: "success",
 			message: 'entry deleted'
 		});
-	});*/
+		next();
+	});
 };
 
 
