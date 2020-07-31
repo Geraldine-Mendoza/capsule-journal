@@ -1,28 +1,26 @@
 <%- include('./partials/header') %>
-<body style="background-color: white;">
+<body>
 <header>
     <h2>Welcome Back <%=firstName%></h2>
 </header>
 
 <!-- are forms the best way to do this ?? -->
-<div class="card-columns">
+<div class="card-deck">
     <% entries.forEach((entry) => { %>
-        <form method="get" action="/users/me/<%= entry._id %>">
-            <div class="card card-default">
-            <button type="submit">
-                <div class="card-header">
+        <a href="/users/me/<%= entry._id %>">
+            <div class="card border-0 mt-3">
+                <div class="card-header border-0">
                     <h3>Day 12</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body border-0 pt-1">
                     <div class="card-title"><%= entry.title %> </div>
                     <p class="card-text"><%=entry.content.slice(0,150)%>
                     <% if(entry.content.length > 150) {%>
                     ...</p>
                     <%}%>     
                 </div>
-            </button>
             </div>
-        </form>
+        </a>
     <% }) %>
 </div>
 
