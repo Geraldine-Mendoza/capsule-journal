@@ -25,16 +25,15 @@ a, a:hover, a:visited, a:active {
 }
 
 .card-deck {
-    max-width: 1200px;
+    max-width: 95vw;
     min-width: 23rem;
     margin: 0 auto;
-    justify-content: center;
+    justify-content: center; /* or space-around */
 }
 
 .card {
-    width: 20rem;
-    max-width: 23rem;
-    height: 17rem;
+    width: 19rem;
+    height: 16rem;
     border-radius: 15px;
     box-shadow: 0 5px 10px rgba(85, 85, 85, 0.75);
     background: white;

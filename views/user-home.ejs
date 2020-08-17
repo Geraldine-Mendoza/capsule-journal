@@ -8,7 +8,7 @@
 <div class="card-deck">
     <% entries.forEach((entry) => { %>
         <a href="/users/me/<%= entry._id %>">
-            <div class="card border-0 mt-3">
+            <div class="card border-0 mt-4">
                 <div class="card-header border-0">
                     <h3>Day 12</h3>
                 </div>
@@ -18,6 +18,10 @@
                     <% if(entry.content.length > 150) {%>
                     ...</p>
                     <%}%>     
+                </div>
+                <div class="em-overlay">
+                    <% if(entry.emotion == em_obj.HAPPY) {%> <p> happyyyyy :) </p> 
+                    <%} else {%> <p> <%=entry.emotion %></p> <%}%>
                 </div>
             </div>
         </a>

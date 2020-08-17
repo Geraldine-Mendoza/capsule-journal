@@ -1,8 +1,9 @@
 // entryController
 // - is it bad practice to have render here? (makes less general)
 
-
+const Emotion = {"HAPPY":1, "SAD":2, "CONFUSED":3, "ANGRY":4, "EXCITED":5, "BORED":6, "SCARED":7, "NONE":8}; // enum ish
 const Entry = require('../models/entryModel');
+const evalEmotion = require('../emotion_analysis/eval');
 
 exports.checkUserIdForEntry = (req, res, next) => {
 	console.log('checking that user with user_id ' + req.user._id + 'has access to entry with _id ' + req.params.entry_id);
@@ -41,7 +42,7 @@ exports.userEntries = (req, res) => {
 				status:"error",
 				message: err
 			});
-			res.render("user-home.ejs", {firstName: req.user.name.firstName, entries: entries});
+			res.render("user-home.ejs", {firstName: req.user.name.firstName, entries: entries, em_obj: Emotion});
 	})
 }
 
@@ -52,6 +53,7 @@ exports.new = (req, res) => {
 		date: Date.now(),
 		title: "",
 		content: "",
+		emotion: Emotion.NONE
 	}, (err, entry) => {
 		console.log(entry);
 		if(err) res.json(err);
@@ -69,9 +71,9 @@ exports.view = (req, res) => {
 };
 
 // update entry info (delete if all empty)
-exports.update = (req, res, next) => {
+exports.update = async (req, res, next) => {
 	if(req.body.entryTitle == '' && req.body.entryContent == '') {
-		Entry.deleteOne({_id: req.params.entry_id}, 
+		Entry.deleteOne({_id: req.params.entry_id},
 			(err, entry) => {
 			if(err) res.send(err);
 			console.log({
@@ -83,12 +85,18 @@ exports.update = (req, res, next) => {
 	}
 	else {
 		console.log('updating entry with entry id of ' + req.params.entry_id)
+		const em = await evalEmotion(req.body.entryContent) // returns promise
 		Entry.updateOne({_id: req.params.entry_id}, 
-		{$set:
-			{title: req.body.entryTitle,
-			content: req.body.entryContent} // add emotion eventually here
-		})
-		.then(next())
+			{$set:
+				{title: req.body.entryTitle,
+				content: req.body.entryContent,
+				emotion: em}
+			})
+		.then(() => {
+				console.log(`succesfully updated entry, which now has emotion ${em}`) 
+				next();
+			}
+		)
 		.catch(err => res.send(err));
 	}
 };

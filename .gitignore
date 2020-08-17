@@ -1,5 +1,14 @@
 #dependencies
 /node_modules
+
+#env 
+/python-env/
 .env
+
+# settings
+/.vscode/
+/emotion_analysis/settings.cfg
+
+# notes
 /notes.pages
 /notes.txt

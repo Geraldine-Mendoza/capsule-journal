@@ -84,3 +84,5 @@
 
 
 - name on button will add a ~query to the url, so ?button_name=... will be in url... can this be helpful?
+
+- using pip install python-decouple for accessing .env (local env) variables easily
