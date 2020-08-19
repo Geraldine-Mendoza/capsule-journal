@@ -48,12 +48,14 @@ a, a:hover, a:visited, a:active {
 }
 
 .card-header {
+    position: relative;
     background-color: #eff1f767;
     align-items: center;
     height: 25%;
 }
 
 .card-header h3 {
+    font-size: 1.6rem;
     text-shadow: lightgrey;
 }
 
@@ -83,4 +85,47 @@ a, a:hover, a:visited, a:active {
 #new_button:hover {
     bottom:4.5%;
     opacity: 0.8;
+}
+
+/* emotions display */
+
+/* general emotion div */
+.em-overlay {
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+    border-radius: 50%;
+    position: absolute;
+    top: 30%;
+    right: 5%;
+    border-width: 0.5px;
+    border-color: gray;
+}
+
+.happy {
+    background-color: gold;
+}
+
+.sad {
+    background-color: skyblue;
+}
+
+.confused {
+    background-color: purple;
+}
+
+.angry {
+    background-color: red;
+}
+
+.excited {
+    background-color: pink;
+}
+
+.bored {
+    background-color: grey;
+}
+
+.scared {
+    background-color: black;
 }

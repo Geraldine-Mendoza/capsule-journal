@@ -1,7 +1,7 @@
 // entryController
 // - is it bad practice to have render here? (makes less general)
 
-const Emotion = {"HAPPY":1, "SAD":2, "CONFUSED":3, "ANGRY":4, "EXCITED":5, "BORED":6, "SCARED":7, "NONE":8}; // enum ish
+const Emotion = {"HAPPY":'happy', "SAD":'sad', "CONFUSED":'confused', "ANGRY":'angry', "EXCITED":'excited', "BORED":'bored', "SCARED":'scared', "NONE":'none'}; // enum ish
 const Entry = require('../models/entryModel');
 const evalEmotion = require('../emotion_analysis/eval');
 

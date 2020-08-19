@@ -1,5 +1,5 @@
 // entryModel.js
-const Emotion = {"HAPPY":1, "SAD":2, "CONFUSED":3, "ANGRY":4, "EXCITED":5, "BORED":6, "SCARED":7, "NONE":8}; // enum ish
+const Emotion = {"HAPPY":'happy', "SAD":'sad', "CONFUSED":'confused', "ANGRY":'angry', "EXCITED":'excited', "BORED":'bored', "SCARED":'scared', "NONE":'none'}; // enum ish
 var mongoose = require('mongoose');
 var conn2 = require("../main"); 
 

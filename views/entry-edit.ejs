@@ -1,5 +1,24 @@
 <!-- views/entry-edit.ejs -->
 
+<script>
+
+function init() {
+    const tx = document.getElementsByTagName('textarea');
+    for (let i = 0; i < tx.length; i++) {
+        if(tx[i].id=="title") continue;
+        tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight+15) + 'px');
+        tx[i].addEventListener("input", OnInput, false);
+    }
+}
+
+function OnInput() {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+}
+
+addEventListener('DOMContentLoaded', init);
+</script>
+
 <link href="/css/entry.css" rel="stylesheet" type="text/css">
 
 <form method="post">
@@ -7,10 +26,10 @@
 
 <div id="entryDiv">
     <div class="textDiv">
-    <textarea type="text" id="title" name="entryTitle" rows="1" cols="50"><%=entry.title%></textarea>
+    <textarea type="text" id="title" name="entryTitle"><%=entry.title%></textarea>
     </div>
     <div class="textDiv">
-    <textarea type="text" id="content" name="entryContent" rows="10" cols="50"><%=entry.content%></textarea>
+    <textarea type="text" id="content" name="entryContent" ><%=entry.content%></textarea>
     </div>
 </div>
 

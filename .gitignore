@@ -7,7 +7,7 @@
 
 # settings
 /.vscode/
-/emotion_analysis/settings.cfg
+emotion_analysis/settings.cfg
 
 # notes
 /notes.pages

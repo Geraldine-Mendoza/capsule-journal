@@ -1,5 +1,7 @@
 body {
     background-color: #E8EBF4;
+    margin: 0;
+    background-image: url("../assets/handmadepaper.png");
 }
 
 textarea {
@@ -8,60 +10,61 @@ textarea {
     vertical-align: middle;
     border: none;
     background: rgba(255, 255, 255, 0.1);
+    text-shadow: -3px 4px 8px rgb(194 201 206);
+    color: #000000e8;
 }
 
-textarea:focus {
-    box-shadow: 0px 0px 0px;
-    outline: 0px;
-    border: none;
+form {
+    margin-block-end: 0;
+    overflow: visible;
+    background-color: transparent;
 }
 
 #entryDiv {
-    width: 100vh;
-    height: 90vh;
     position: relative;
     margin: 0 auto;
-    margin-top: 30px;
-    background-image: url("../assets/linedpaper.png");
+    margin-top: 4rem;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.651);
 }
 
 #title {
     font-size: 1.8rem;
     width: 100%;
-    max-height: 10vh;
-    box-shadow: 0px 4px 0px #E8EBF4;
-    border-bottom: black;
-    border-bottom-width: 4px;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    margin-block-end: 5px;
+    overflow: hidden;
+    padding-bottom: 0;
+    padding-top: 0;
 }
-
 
 #content {
     font-size: 1.5rem;
     width: 100%;
-    height: 83vh;
     line-height: 1.5rem;
 }
 
 .textDiv {
     text-align: center;
-    max-width: 800px;
+    max-width: 70vw;
     min-width: 300px;
     margin: 0 auto;
 }
 
 #close_button, #save {
     position: fixed;
-    top:10;
-    width: 75px;
-    height: 75px;
+    top:3%;
+    left: 3%;
+    width: 55px;
+    height: 55px;
     transition: all 100ms ease-out;
+    background-color: rgb(209 132 168 / 9%);
+    border-width: 0px;
+    padding: 0px;
 }
 
 #close_button {
-    left: 20;
-    background-image: url("https://img.icons8.com/plasticine/75/000000/close-window.png");
+    background-image: url("../assets/close-hand-large-55.png");
 }
 
 #save {
@@ -70,12 +73,8 @@ textarea:focus {
 }
 
 #close_button:hover {
+    top:2.5%;
     opacity: 0.8;
-    top:5;
-    left: 15;
-    width: 80px;
-    height: 80px;
-    background-image: url("https://img.icons8.com/plasticine/80/000000/close-window.png");
 } 
 
 #save:hover {

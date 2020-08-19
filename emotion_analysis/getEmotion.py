@@ -16,13 +16,13 @@ if __name__ == "__main__":
     args = vars(ap.parse_args())
 
     text = args["text"]
-    # emotion = paralleldots.emotion(text)['emotion'];
+    emotion = paralleldots.emotion(text)['emotion'];
 
     # # possible emotions are Happy, Angry, Bored, Fear, Sad, Excited
     # # right now, just taking the one highest emotion...
-    # max_val = max(emotion.values())
-    # max_em = [k for k, v in emotion.items() if v==max_val]
+    max_val = max(emotion.values())
+    max_em = [k for k, v in emotion.items() if v==max_val]
 
-    #print(max_em[0])
-    print('Happy')
+    print(max_em[0])
+    # print('Happy')
 
