@@ -4,5 +4,30 @@
 }
 
 #list-entries {
-    border: 1px solid plum;
+}
+
+.lentry {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    background-color: white;
+}
+
+.lentry:hover {
+    transform: translate3D(0, -1px, 0);
+  	opacity: 0.8;
+    filter: alpha(opacity=80);
+    background-color: rgb(220 221 241); /* TODO: change to be header color */
+}
+
+.title {
+    font-weight: bold;
+    text-shadow: lightgrey;
+}
+
+.content p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+   -webkit-box-orient: vertical;
 }

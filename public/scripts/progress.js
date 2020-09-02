@@ -1,16 +1,29 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
-// creates html elements (look like list) correspoding to emotion selected on pie
-function emEntries(emotion) {
+// need to wait doc ready??
+function listEmEntries(em) {
+    var $parent = $('#list-entries');
+    $parent.empty();
     for(k in entries) {
-        if(entries[k] && entries[k].emotion == emotion) {
-            //document.getElementById('list-entries').innerHTML = 
+        var curr = entries[k];
+        if(curr.emotion == em) {
+            var $entry = $(`<a class="list-group-item lentry" href=\"/users/me/${curr._id}\"></a>`);
+            $entry.append(
+                $(`<div class="d-flex w-100 justify-content-between">
+                    <h4 class="title">${curr.title}</h4>
+                    <small class="date">${formatDate(curr.date)}</small>
+                   </div>`));
+            $entry.append($(`<div class="content"><p>${curr.content}</p></div>`));
+
+            $parent.append($entry);
         }
     }
 }
 
 
+// SET UP PIE 
+// format to array
 function formatData() {
     // receive list of entries by person
     // [header x, header y]
@@ -47,11 +60,12 @@ async function drawChart() {
     
     // The select handler. Call the chart's getSelection() method
     function selectHandler() {
-            if(!chart.getSelection) return;  
+        if(!chart.getSelection) return;  
         var selectedItem = chart.getSelection()[0];
         if (selectedItem) {
-        var value = data.getValue(selectedItem.row, 0);
-        console.log('The user selected ' + value);
+            var value = data.getValue(selectedItem.row, 0).toLowerCase();
+            console.log('user selected ' + value);
+            listEmEntries(value);
         }
     }
 

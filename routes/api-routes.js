@@ -35,7 +35,7 @@ router.route('/login')
 	})
 	.post(passport.authenticate('local', 
 	{
-		successRedirect: '/users/me/progress', //FIXME: should be user home!!! ***
+		successRedirect: '/users/me',
 		failureRedirect: '/login',
 		failureFlash: true 
 	}));
@@ -61,8 +61,60 @@ router.route('/users/me/progress')
 		//entryController.userEntries("progress.ejs")
 		(req, res) => {
 			res.render("progress.ejs", {firstName: "FirstName", 
-				entries: [{emotion: Emotion.HAPPY}, {emotion: Emotion.SAD}, {emotion: Emotion.HAPPY},
-					{emotion: Emotion.EXCITED}, {emotion: Emotion.BORED}], 
+				entries: [{
+					"emotion": "happy",
+					"_id": "5f0bc60e2bf85147e5e68ae8",
+					"date": "2020-07-13T02:25:18.435Z",
+					"user_id": "5f0bbb62a67c2b476f78d73f",
+					"title": "this is a title",
+					"content": "this is the content of the entry. yes it is. is it now. ok now. ok not then but NOW. not then, but maybe now?\r\n\r\nok NOW IT WILL WORK\r\n\r\nok so maybe not\r\n\r\nplease\r\n\r\nhello\r\n\r\nHELLO\r\n\r\nok sort of\r\n\r\nNOW\r\ntest\r\nturn off auth for a bit\r\nwell idk it kinda hard",
+					"__v": 0
+				},
+				{
+					"emotion": "happy",
+					"_id": "5f1a1556b269f6a21bb3c277",
+					"date": "2020-07-23T22:55:18.934Z",
+					"user_id": "5f0bbb62a67c2b476f78d73f",
+					"title": "ok now it's working yay!",
+					"content": "Today I don't feel with much motivation to do chores. Today I'm cooking with my children, and that makes me happy because I'm sharing with my children a very good time. But I don't want to do anything else. And I'm contemplating a warm evening that I see from the window, where I see trees and birds whistling.",
+					"__v": 0
+				},
+				{
+					"emotion": "excited",
+					"_id": "5f23679671e0dbdf1e994d17",
+					"date": "2020-07-31T00:36:38.402Z",
+					"user_id": "5f0bbb62a67c2b476f78d73f",
+					"title": "another entry",
+					"content": "execute order 66!",
+					"__v": 0
+				},
+				{
+					"emotion": "angry",
+					"_id": "5f39d015797fe8213bbc0bca",
+					"date": "2020-08-17T00:32:21.754Z",
+					"user_id": "5f0bbb62a67c2b476f78d73f",
+					"title": "hey...",
+					"content": "im trying here to have other emotion",
+					"__v": 0
+				},
+				{
+					"emotion": "sad",
+					"_id": "5f39d0de74f0652175810b38",
+					"date": "2020-08-17T00:35:42.006Z",
+					"user_id": "5f0bbb62a67c2b476f78d73f",
+					"title": "hi...",
+					"content": "i am sad. this is sad. im trying to tell you that this is sad. ok. bye.\r\n\r\nwe will see?",
+					"__v": 0
+				},
+				{
+					"emotion": "excited",
+					"_id": "5f3ae0f999badd2e151cd82d",
+					"user_id": "5f0bbb62a67c2b476f78d73f",
+					"date": "2020-08-17T19:56:41.512Z",
+					"title": "craziness unlimited",
+					"content": "if you are watching this your days are numbered. ",
+					"__v": 0
+				}], 
 				em_obj: Emotion});
 		});
 

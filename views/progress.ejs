@@ -4,12 +4,13 @@
 <script>
     var entries = <%-JSON.stringify(entries)%>;
     var Emotion = <%-JSON.stringify(em_obj)%>; 
-
-    </script>
+</script>
 <script type="text/javascript" src="/scripts/progress.js"></script>
 <link href="/css/progress.css" rel="stylesheet" type="text/css">
     
     <div id="piechart"></div>
-    <div id="list-entries"></div>
+    <div id="list-entries" class="d-flex flex-column-reverse">
+        <p style="text-align: center; color: grey;">Click on a part of the pie to see the correponding entries!</p>
+    </div>
 
 </body>
