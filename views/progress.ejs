@@ -1,0 +1,15 @@
+<%- include('./partials/header') %>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> <!-- for pie chart (google api) -->
+<script>
+    var entries = <%-JSON.stringify(entries)%>;
+    var Emotion = <%-JSON.stringify(em_obj)%>; 
+
+    </script>
+<script type="text/javascript" src="/scripts/progress.js"></script>
+<link href="/css/progress.css" rel="stylesheet" type="text/css">
+    
+    <div id="piechart"></div>
+    <div id="list-entries"></div>
+
+</body>

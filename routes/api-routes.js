@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 const entryController = require('../controllers/entryController');
 const profileController = require('../controllers/profileController');
 const auth = require('./auth');
+const { render } = require('node-sass');
 
 // used only for testing
 router.route('/deleteOneAccount/:id')
@@ -26,6 +27,7 @@ router.route('/deleteAllAccounts')
 router.route('/seeAllAccounts')
 	.get(profileController.index);
 
+// LOGIN
 router.route('/login')
 	.get(auth.checkNotAuthenticated,
 		(req, res) => {
@@ -33,21 +35,36 @@ router.route('/login')
 	})
 	.post(passport.authenticate('local', 
 	{
-		successRedirect: '/users/me',
+		successRedirect: '/users/me/progress', //FIXME: should be user home!!! ***
 		failureRedirect: '/login',
 		failureFlash: true 
 	}));
 
+// SIGN UP
 router.route('/signup')
 	.get((req, res) => {
 		res.render("signup.ejs");
 	})
 	.post(profileController.new);
 
-// user-home
+// USER HOME
 router.route('/users/me')
 	.get(auth.checkAuthenticated,
-		entryController.userEntries); // you can also do user.name for some reason ?? **
+		entryController.userEntries("user-home.ejs")); // you can also do user.name for some reason ?? **
+
+// FIXME: remove
+const Emotion = {"HAPPY":'happy', "SAD":'sad', "CONFUSED":'confused', "ANGRY":'angry', "EXCITED":'excited', "BORED":'bored', "SCARED":'scared', "NONE":'none'}; // enum ish
+
+// GRAPHS AND INFO (PROGRESS)
+router.route('/users/me/progress')
+	.get(//auth.checkAuthenticated,
+		//entryController.userEntries("progress.ejs")
+		(req, res) => {
+			res.render("progress.ejs", {firstName: "FirstName", 
+				entries: [{emotion: Emotion.HAPPY}, {emotion: Emotion.SAD}, {emotion: Emotion.HAPPY},
+					{emotion: Emotion.EXCITED}, {emotion: Emotion.BORED}], 
+				em_obj: Emotion});
+		});
 
 
 // ENTRY ROUTES

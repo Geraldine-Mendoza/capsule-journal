@@ -35,16 +35,31 @@ exports.index = (req, res) => {
 	});
 };
 
-exports.userEntries = (req, res) => {
-	Entry.find({user_id: req.user._id}, 
-		(err, entries) => {
-			if(err) res.json({
-				status:"error",
-				message: err
-			});
-			res.render("user-home.ejs", {firstName: req.user.name.firstName, entries: entries, em_obj: Emotion});
-	})
+// can i merge with userEntries so that both just return entries and Emotion, what is required, then render later?
+exports.userEntries = (page) => {
+	return (req, res) => {
+		Entry.find({user_id: req.user._id}, 
+			(err, entries) => {
+				if(err) res.json({
+					status:"error",
+					message: err
+				});
+				res.render(page, {firstName: req.user.name.firstName, entries: entries, em_obj: Emotion});
+		});
+	}
 }
+
+
+// exports.userEntries = (req, res) => {
+// 	Entry.find({user_id: req.user._id}, 
+// 		(err, entries) => {
+// 			if(err) res.json({
+// 				status:"error",
+// 				message: err
+// 			});
+// 			res.render("user-home.ejs", {firstName: req.user.name.firstName, entries: entries, em_obj: Emotion});
+// 	})
+// }
 
 // create new entry
 exports.new = (req, res) => {
