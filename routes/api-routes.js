@@ -122,7 +122,7 @@ router.route('/users/me/progress')
 // ENTRY ROUTES
 router.route('/users/me/new')
 	.post(auth.checkAuthenticated,
-		entryController.new) // create new entry and redirect to it
+		  entryController.new) // create new entry and redirect to it
 
 router.route('/users/me/:entry_id')
 	.get(auth.checkAuthenticated, // make sure authenticated user is accessing
@@ -132,7 +132,10 @@ router.route('/users/me/:entry_id')
 	.post(auth.checkAuthenticated, 
 		entryController.checkUserIdForEntry,
 		entryController.update, 
-		(req, res) => { res.redirect('/users/me')}); // update part of the source, but not the entirety
+		(req, res) => { res.redirect('/users/me')}) // update part of the source, but not the entirety
+	.delete(auth.checkAuthenticated,
+		entryController.checkUserIdForEntry,
+		entryController.delete);
 
 router.route('/entries/')
 	.get(entryController.index);

@@ -32,19 +32,23 @@ a, a:hover, a:visited, a:active {
 }
 
 .card {
+    z-index: 0;
     width: 19rem;
-    height: 16rem;
+    height: 14.5rem;
     border-radius: 15px;
     box-shadow: 0 5px 10px rgba(85, 85, 85, 0.75);
     background: white;
     /*background: linear-gradient(142deg, rgba(235,232,244,1) 0%, rgba(241,232,244,1) 26%, rgba(244,232,241,1) 32%, white 50%);*/
     overflow: hidden;
+    position: relative;
+}
+
+.card:hover * { /* its like a semi-transparent container */
+  	opacity: 0.9;
 }
 
 .card:hover {
     transform: translate3D(0, -1px, 0);
-  	opacity: 0.8;
-    filter: alpha(opacity=80);
 }
 
 .card-header {
@@ -59,13 +63,60 @@ a, a:hover, a:visited, a:active {
     text-shadow: lightgrey;
 }
 
+.card-body {
+    z-index: inherit;
+    padding-bottom: 0.5rem;
+}
+
 .card-title {
     font-variant: small-caps;
     font-size: 1.1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   -webkit-line-clamp: 1; /* number of lines to show */
+   -webkit-box-orient: vertical;
+   margin-bottom: 0.3rem;
+   padding-bottom: 0px;
+}
+
+.card-title p {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .card-text {
     font-size: small;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   -webkit-line-clamp: 4; /* number of lines to show */
+   -webkit-box-orient: vertical;
+   margin-bottom: 0.1rem;
+}
+
+.entry-options {
+    margin-left: 15px;
+    margin-right: 15px;
+    position: relative;
+}
+
+.delete-button {
+    z-index: 1;
+    height: 30px;
+    width: 30px;
+    background-image: url("../assets/grey-bin-min-30.png");
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    bottom: 10px;
+    right: 11px;
+    opacity: 0.5;
+}
+
+.delete-button:hover {
+    filter: none;
+    opacity: 1;
 }
 
 #new_button {
@@ -86,6 +137,7 @@ a, a:hover, a:visited, a:active {
     bottom:4.5%;
     opacity: 0.8;
 }
+
 
 /* emotions display */
 

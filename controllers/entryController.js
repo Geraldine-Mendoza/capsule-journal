@@ -35,7 +35,7 @@ exports.index = (req, res) => {
 	});
 };
 
-// can i merge with userEntries so that both just return entries and Emotion, what is required, then render later?
+// get user's entries and render given page
 exports.userEntries = (page) => {
 	return (req, res) => {
 		Entry.find({user_id: req.user._id}, 
@@ -48,18 +48,6 @@ exports.userEntries = (page) => {
 		});
 	}
 }
-
-
-// exports.userEntries = (req, res) => {
-// 	Entry.find({user_id: req.user._id}, 
-// 		(err, entries) => {
-// 			if(err) res.json({
-// 				status:"error",
-// 				message: err
-// 			});
-// 			res.render("user-home.ejs", {firstName: req.user.name.firstName, entries: entries, em_obj: Emotion});
-// 	})
-// }
 
 // create new entry
 exports.new = (req, res) => {
@@ -122,11 +110,12 @@ exports.delete = (req, res) => {
 		_id: req.params.entry_id
 	}, (err, entry) => {
 		if(err) res.send(err);
-		console.log({
+		var response = {
 			status: "success",
-			message: 'entry deleted'
-		});
-		next();
+			message: 'entry with id ' + req.params.entry_id + ' deleted'
+		}
+		console.log(response);
+		res.status(200).send(response);
 	});
 };
 

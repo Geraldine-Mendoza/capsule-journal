@@ -1,8 +1,8 @@
 #dependencies
 /node_modules
 
-#env 
-/python-env/
+#env (python env could be tracked)
+/python-env/ 
 .env
 
 # settings
